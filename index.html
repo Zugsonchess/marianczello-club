@@ -3,9 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <title>Marianczello Club</title>
+    <style>
+        body {
+            background: #0d0d13;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            padding-top: 40px;
+        }
+        /* Neonowy efekt dla nagłówka */
+        h1 {
+            font-size: 3rem;
+            color: #fff;
+            text-shadow: 0 0 10px #00f3ff, 0 0 20px #00f3ff, 0 0 40px #00f3ff;
+            margin-bottom: 30px;
+        }
+        /* Styl dla boksów z widgetami */
+        .box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid #ff007f;
+            box-shadow: 0 0 15px #ff007f;
+            border-radius: 15px;
+            display: inline-block;
+            margin: 15px;
+            padding: 20px;
+            min-width: 250px;
+            vertical-align: top;
+        }
+        .box h2 {
+            margin-top: 0;
+            color: #ff007f;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #00f3ff;
+            text-shadow: 0 0 10px #00f3ff;
+        }
+        #date {
+            font-size: 1.5rem;
+            color: #ffb703;
+            text-shadow: 0 0 10px #ffb703;
+            margin-top: 15px;
+        }
+    </style>
 </head>
-<body style="background: #111; color: #fff; font-family: sans-serif; text-align: center; padding-top: 50px;">
-    <h1>Witaj w Marianczello Club! 🚀</h1>
-    <p>Mój pierwszy kod na GitHubie działa bezbłędnie.</p>
+<body>
+
+    <h1>M A R I A N C Z E L L O &nbsp; C L U B 🚀</h1>
+
+    <!-- LICZNIK ONLINE -->
+    <div class="box">
+        <h2>Klubowicze Online</h2>
+        <div id="counter" class="number">12</div>
+    </div>
+
+    <!-- KALENDARZ -->
+    <div class="box">
+        <h2>Kalendarz Klubu</h2>
+        <div id="date">Ładowanie daty...</div>
+    </div>
+
+    <script>
+        // Skrypt na żywą zmianę licznika online
+        setInterval(() => {
+            const current = parseInt(document.getElementById('counter').innerText);
+            // Losowa zmiana o -2 do +2 osób
+            const change = Math.floor(Math.random() * 5) - 2; 
+            let next = current + change;
+            if (next < 5) next = 5; // Minimalnie 5 osób w klubie
+            document.getElementById('counter').innerText = next;
+        }, 3000); // Aktualizacja co 3 sekundy
+
+        // Skrypt na aktualną datę
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('date').innerText = new Date().toLocaleDateString('pl-PL', options);
+    </script>
+
 </body>
 </html>
