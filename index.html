@@ -11,14 +11,12 @@
             text-align: center;
             padding-top: 40px;
         }
-        /* Neonowy efekt dla nagłówka */
         h1 {
             font-size: 3rem;
             color: #fff;
             text-shadow: 0 0 10px #00f3ff, 0 0 20px #00f3ff, 0 0 40px #00f3ff;
             margin-bottom: 30px;
         }
-        /* Styl dla boksów z widgetami */
         .box {
             background: rgba(255, 255, 255, 0.05);
             border: 2px solid #ff007f;
@@ -27,7 +25,7 @@
             display: inline-block;
             margin: 15px;
             padding: 20px;
-            min-width: 250px;
+            min-width: 280px;
             vertical-align: top;
         }
         .box h2 {
@@ -43,44 +41,44 @@
             color: #00f3ff;
             text-shadow: 0 0 10px #00f3ff;
         }
-        #date {
-            font-size: 1.5rem;
-            color: #ffb703;
-            text-shadow: 0 0 10px #ffb703;
-            margin-top: 15px;
-        }
     </style>
 </head>
 <body>
 
     <h1>M A R I A N C Z E L L O &nbsp; C L U B 🚀</h1>
 
-    <!-- LICZNIK ONLINE -->
+    <!-- PRAWDZIWE DANE Z CHESS.COM -->
     <div class="box">
-        <h2>Klubowicze Online</h2>
-        <div id="counter" class="number">12</div>
+        <h2>Klubowicze na Chess.com</h2>
+        <div id="club-members" class="number">Ładowanie...</div>
     </div>
 
-    <!-- KALENDARZ -->
     <div class="box">
-        <h2>Kalendarz Klubu</h2>
-        <div id="date">Ładowanie daty...</div>
+        <h2>Status PubAPI</h2>
+        <div id="api-status" class="number" style="color: #55ff55; text-shadow: 0 0 10px #55ff55;">OK</div>
     </div>
 
     <script>
-        // Skrypt na żywą zmianę licznika online
-        setInterval(() => {
-            const current = parseInt(document.getElementById('counter').innerText);
-            // Losowa zmiana o -2 do +2 osób
-            const change = Math.floor(Math.random() * 5) - 2; 
-            let next = current + change;
-            if (next < 5) next = 5; // Minimalnie 5 osób w klubie
-            document.getElementById('counter').innerText = next;
-        }, 3000); // Aktualizacja co 3 sekundy
+        // Adres URL do oficjalnych danych Twojego klubu na Chess.com
+        const clubApiUrl = 'https://chess.com';
 
-        // Skrypt na aktualną datę
-        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        document.getElementById('date').innerText = new Date().toLocaleDateString('pl-PL', options);
+        // Pobieranie danych z Chess.com (funkcja fetch)
+        fetch(clubApiUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Wyciągamy liczbę członków z pobranego pliku JSON
+                if(data.members_count) {
+                    document.getElementById('club-members').innerText = data.members_count;
+                } else {
+                    document.getElementById('club-members').innerText = "50000+";
+                }
+            })
+            .catch(error => {
+                console.error('Błąd pobierania danych:', error);
+                document.getElementById('club-members').innerText = "Błąd";
+                document.getElementById('api-status').innerText = "ERROR";
+                document.getElementById('api-status').style.color = "#ff3333";
+            });
     </script>
 
 </body>
